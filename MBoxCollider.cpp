@@ -20,6 +20,7 @@ void MBoxCollider::Set(const MVector3& inPosition, const MVector3& inSize)
 {
 	Position = inPosition;
 	Size = inSize;
+	HalfSize = Size;	// юс╫ц
 
 	Update();
 }
@@ -43,13 +44,30 @@ void MBoxCollider::Update()
 	Vertices[0] = Position - Size;
 	
 	// 
-	Vertices[1] = Vertices[0];
-	Vertices[1].X += (Size.X * 2);
+	{
+		Vertices[1] = Vertices[0];
+		Vertices[1].X += (Size.X * 2);
+
+		Axis[0] = Vertices[1] - Vertices[0];
+		Axis[0].Normalize();
+	}
 
 	// 
-	Vertices[2] = Vertices[0];
-	Vertices[2].Y += (Size.Y * 2);
+	{
+		Vertices[2] = Vertices[0];
+		Vertices[2].Y += (Size.Y * 2);
 
-	Vertices[3] = Vertices[0];
-	Vertices[3].Z += (Size.Z * 2);
+		Axis[1] = Vertices[2] - Vertices[0];
+		Axis[1].Normalize();
+	}
+	
+
+	{
+		Vertices[3] = Vertices[0];
+		Vertices[3].Z += (Size.Z * 2);
+
+		Axis[2] = Vertices[3] - Vertices[0];
+		Axis[2].Normalize();
+	}
+	
 }
