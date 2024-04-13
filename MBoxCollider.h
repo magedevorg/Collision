@@ -3,6 +3,8 @@
 
 #include "MVector.h"
 
+#include "MTransform.h"
+
 
 class MBoxCollider
 {
@@ -12,7 +14,10 @@ public:
 
 public:
 	// 설정
-	void Set(const MVector3& inPosition, const MVector3& inSize);
+	void Set(const MTransform& inTransform, const MVector3& inSize);
+
+
+	
 
 	void SetPosition(const MVector3& inPosition);
 	void SetSize(const MVector3& inSize);
@@ -27,7 +32,7 @@ public:
 	}
 
 	const MVector3& GetPosition() {
-		return Position;
+		return Transform.GetLocation();
 	}
 
 	// 하프 사이즈
@@ -54,4 +59,7 @@ protected:
 
 	// 축 정보
 	std::array<MVector3, 3> Axis;
+
+
+	MTransform Transform;
 };

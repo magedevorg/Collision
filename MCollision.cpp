@@ -30,6 +30,45 @@ bool MCollision::CheckOBB(MBoxCollider& inBox1, MBoxCollider& inBox2)
 		return false;
 	}
 
+	// cross(x)
+	if (true == SeperatingPlane(distance, MVector3::CrossProduct(inBox1.GetAxis()[0], inBox2.GetAxis()[0]), inBox1, inBox2)) {
+		return false;
+	}
+
+	if (true == SeperatingPlane(distance, MVector3::CrossProduct(inBox1.GetAxis()[0], inBox2.GetAxis()[1]), inBox1, inBox2)) {
+		return false;
+	}
+
+	if (true == SeperatingPlane(distance, MVector3::CrossProduct(inBox1.GetAxis()[0], inBox2.GetAxis()[2]), inBox1, inBox2)) {
+		return false;
+	}
+
+	// cross(y)
+	if (true == SeperatingPlane(distance, MVector3::CrossProduct(inBox1.GetAxis()[1], inBox2.GetAxis()[0]), inBox1, inBox2)) {
+		return false;
+	}
+
+	if (true == SeperatingPlane(distance, MVector3::CrossProduct(inBox1.GetAxis()[1], inBox2.GetAxis()[1]), inBox1, inBox2)) {
+		return false;
+	}
+
+	if (true == SeperatingPlane(distance, MVector3::CrossProduct(inBox1.GetAxis()[1], inBox2.GetAxis()[2]), inBox1, inBox2)) {
+		return false;
+	}
+
+	// cross(z)
+	if (true == SeperatingPlane(distance, MVector3::CrossProduct(inBox1.GetAxis()[2], inBox2.GetAxis()[0]), inBox1, inBox2)) {
+		return false;
+	}
+
+	if (true == SeperatingPlane(distance, MVector3::CrossProduct(inBox1.GetAxis()[2], inBox2.GetAxis()[1]), inBox1, inBox2)) {
+		return false;
+	}
+
+	if (true == SeperatingPlane(distance, MVector3::CrossProduct(inBox1.GetAxis()[2], inBox2.GetAxis()[2]), inBox1, inBox2)) {
+		return false;
+	}
+
 	return true;
 }
 
