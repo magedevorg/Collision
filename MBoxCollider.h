@@ -2,64 +2,82 @@
 
 
 #include "MVector.h"
-
 #include "MTransform.h"
+
+#include "MAxis.h"
 
 
 class MBoxCollider
 {
 public:
-	MBoxCollider();
-	MBoxCollider(const MVector3& inPosition, const MVector3& inSize);
+	MBoxCollider() {
+		SetSize(MVector3(100.0f,100.0f,100.0f));
+	}
+
+	MBoxCollider(const MTransform& inTransform, const MVector3& inSize) 
+	{
+		Set(inTransform, inSize);
+	}
 
 public:
 	// 설정
-	void Set(const MTransform& inTransform, const MVector3& inSize);
-
-
-	
-
-	void SetPosition(const MVector3& inPosition);
-	void SetSize(const MVector3& inSize);
-
-	// 
-	const std::array<MVector3, 4>& GetVertices() {
-		return Vertices;
+	void Set(const MTransform& inTransform, const MVector3& inSize) 
+	{
+		SetTransform(inTransform);
+		SetSize(inSize);
 	}
 
-	const std::array<MVector3, 3>& GetAxis() const {
-		return Axis;
+	void SetSize(const MVector3& inSize) {
+		HalfSize = inSize * 0.5f;
 	}
 
-	const MVector3& GetPosition() {
-		return Transform.GetLocation();
-	}
+	void SetTransform(const MTransform& inTransform);
 
-	// 하프 사이즈
 	const MVector3& GetHalfSize() const {
 		return HalfSize;
 	}
 
-protected:
-	void Update();
+	const MTransform& GetTransform() {
+		return Transform;
+	}
+
+	const MAxis3& GetAxis() const {
+		return Axis;
+	}
+
+
+	// 포인트 리스트를 얻는다
+	void GetPointList(std::vector<MVector3>& inPointList)
+	{
+		MMatrix4 transformMatrix = Transform.GetMatrix();
+
+		auto AddPointListFunc = [&](float inX, float inY, float inZ)
+			{
+				inPointList.push_back(transformMatrix * MVector3(inX, inY, inZ));
+			};
+
+		// 추가
+		AddPointListFunc(-HalfSize.X, -HalfSize.Y, -HalfSize.Z);	// 0
+		AddPointListFunc(HalfSize.X, -HalfSize.Y, -HalfSize.Z);		// 1
+		AddPointListFunc(HalfSize.X, -HalfSize.Y, HalfSize.Z);		// 2
+		AddPointListFunc(-HalfSize.X, -HalfSize.Y, HalfSize.Z);		// 3
+
+		AddPointListFunc(-HalfSize.X, HalfSize.Y, -HalfSize.Z);		// 0
+		AddPointListFunc(HalfSize.X, HalfSize.Y, -HalfSize.Z);		// 1
+		AddPointListFunc(HalfSize.X, HalfSize.Y, HalfSize.Z);		// 2
+		AddPointListFunc(-HalfSize.X, HalfSize.Y, HalfSize.Z);		// 3
+	}
+
+
+
 
 protected:
-	// 위치
-	MVector3 Position;
+	// 변환(위치/회전/스케일) 정보
+	MTransform Transform;
 
-	// 크기
-	MVector3 Size;
-
-	// 
+	// 크기 정보
 	MVector3 HalfSize;
 
-	// 라인 리스트
-	std::array<MVector3, 4> Vertices;
-
-
 	// 축 정보
-	std::array<MVector3, 3> Axis;
-
-
-	MTransform Transform;
+	MAxis3 Axis;
 };
