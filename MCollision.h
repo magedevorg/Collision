@@ -15,3 +15,5 @@ public:
 	static bool SeperatingPlane(const MVector3& inDistance, const MVector3& inDirection, MBoxCollider& inBox1, MBoxCollider& inBox2);
 };
 
+
+// test
