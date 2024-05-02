@@ -1,18 +1,16 @@
 #pragma once
 
-
-#include "MBoxCollider.h"
-
+#include "MPrerequisites.h"
 
 class MCollision
 {
 public:
-	static MBOOL CheckOBB( MBoxCollider& inBox1,  MBoxCollider& inBox2);
+	static MBOOL CheckOBB( const class MBoxCollider& inBox1, const class MBoxCollider& inBox2);
 
-	static MBOOL CheckOBB(MRect& inRect1, MRect& inRect2);
+	static MBOOL CheckOBB(const class MRectCollider& inRect1, const class MRectCollider& inRect2);
 
 	
-	static bool SeperatingPlane(const MVector3& inDistance, const MVector3& inDirection, MBoxCollider& inBox1, MBoxCollider& inBox2);
+	static bool SeperatingPlane(const MVector3& inDistance, const MVector3& inDirection, const class MBoxCollider& inBox1, const class MBoxCollider& inBox2);
 };
 
 

@@ -1,8 +1,11 @@
 #include "MCollision.h"
+#include "MVector.h"
+#include "MBoxCollider.h"
+#include "MRectCollider.h"
 
 
 
-bool MCollision::CheckOBB(MBoxCollider& inBox1, MBoxCollider& inBox2)
+bool MCollision::CheckOBB(const class MBoxCollider& inBox1, const class MBoxCollider& inBox2)
 {
 	MVector3 distance = inBox2.GetTransform().Position - inBox1.GetTransform().Position;
 
@@ -75,7 +78,7 @@ bool MCollision::CheckOBB(MBoxCollider& inBox1, MBoxCollider& inBox2)
 	return true;
 }
 
-MBOOL MCollision::CheckOBB(MRect& inRect1, MRect& inRect2)
+MBOOL MCollision::CheckOBB(const class MRectCollider& inRect1, const class MRectCollider& inRect2)
 {
 	// 사용할 벡터 정보
 	std::array<MVector2, 4> valueList;		// 벡터 정보
@@ -131,7 +134,7 @@ MBOOL MCollision::CheckOBB(MRect& inRect1, MRect& inRect2)
 }
 
 
-bool MCollision::SeperatingPlane(const MVector3& inDistance, const MVector3& inBaseAxis, MBoxCollider& inBox1, MBoxCollider& inBox2)
+bool MCollision::SeperatingPlane(const MVector3& inDistance, const MVector3& inBaseAxis, const class MBoxCollider& inBox1, const class MBoxCollider& inBox2)
 {
 	float val = fabsf(MVector3::DotProduct(inBaseAxis, inDistance));
 
